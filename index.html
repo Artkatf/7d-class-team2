@@ -91,25 +91,27 @@
             padding: 30px;
             border-radius: 16px;
             border-left: 5px solid var(--accent);
-            display: none;
+            display: none; /* Скрыто по умолчанию */
             animation: fadeIn 0.5s;
             position: relative;
         }
-        .profile-section.active { display: block; }
+        .profile-section.active { display: block; } /* Показываем, если есть класс active */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 20px;
+        .back-btn, .close-profile {
+            background: none;
+            border: none;
             color: var(--text-sec);
+            cursor: pointer;
             text-decoration: none;
-            border: 1px solid var(--text-sec);
+            font-size: 1rem;
             padding: 8px 16px;
+            border: 1px solid var(--text-sec);
             border-radius: 6px;
         }
-        .back-btn:hover {
+        .back-btn:hover, .close-profile:hover {
             color: var(--accent);
             border-color: var(--accent);
         }
@@ -117,13 +119,9 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            background: none;
-            border: none;
-            color: var(--text-sec);
             font-size: 1.5rem;
-            cursor: pointer;
+            line-height: 1;
         }
-        .close-profile:hover { color: var(--accent); }
 
         .table-container {
             overflow-x: auto;
@@ -145,12 +143,6 @@
             text-transform: uppercase;
             font-size: 0.8rem;
         }
-        .table-name-link {
-            color: var(--text-main);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .table-name-link:hover { color: var(--accent); }
     </style>
 </head>
 <body>
@@ -217,7 +209,6 @@
 
     <!-- Секции профилей -->
     
-    <!-- Артур (полевой) -->
     <div id="profile-stogov" class="profile-section">
         <button class="close-profile" onclick="closeProfile('profile-stogov')">&times;</button>
         <h2>Стогов Артур — Левый фланговый атакующий</h2>
@@ -228,17 +219,15 @@
         <a href="#players-grid" class="back-btn">← Вернуться к составу</a>
     </div>
 
-    <!-- Никита (полевой) --><div id="profile-pokskonnoy" class="profile-section">
+    <div id="profile-pokskonnoy" class="profile-section">
         <button class="close-profile" onclick="closeProfile('profile-pokskonnoy')">&times;</button>
-        <h2>Посканной Никита — Правый фланговый атакующий</h2>
-        <p style="color: var(--text-sec);">Главный бомбардир команды. Лидер по количеству голов и матчей.</p>
+        <h2>Посканной Никита — Правый фланговый атакующий</h2><p style="color: var(--text-sec);">Главный бомбардир команды. Лидер по количеству голов и матчей.</p>
         <div style="margin: 20px 0; padding: 15px; background: #0f172a; border-radius: 8px;">
             <p><strong>Матчи:</strong> 50 | <strong>Голы:</strong> 45 | <strong>Пасы:</strong> 25</p>
         </div>
         <a href="#players-grid" class="back-btn">← Вернуться к составу</a>
     </div>
 
-    <!-- Александр (полевой) -->
     <div id="profile-grankin" class="profile-section">
         <button class="close-profile" onclick="closeProfile('profile-grankin')">&times;</button>
         <h2>Гранкин Александр — Левый защитник</h2>
@@ -249,31 +238,29 @@
         <a href="#players-grid" class="back-btn">← Вернуться к составу</a>
     </div>
 
-    <!-- Максим (полевой) -->
     <div id="profile-klyshnikov" class="profile-section">
         <button class="close-profile" onclick="closeProfile('profile-klyshnikov')">&times;</button>
         <h2>Клышников Максим — Правый защитник</h2>
-        <p style="color: var(--text-sec);">Уверенно закрывает правую бровку, хорошо читает игру.</p>
+        <p style="color: var(--text-sec);">Стабильный игрок, хорошо читает игру.</p>
         <div style="margin: 20px 0; padding: 15px; background: #0f172a; border-radius: 8px;">
             <p><strong>Матчи:</strong> 0 | <strong>Голы:</strong> 0 | <strong>Пасы:</strong> 0</p>
         </div>
         <a href="#players-grid" class="back-btn">← Вернуться к составу</a>
     </div>
 
-    <!-- Лев (вратарь) -->
     <div id="profile-smirnov" class="profile-section">
         <button class="close-profile" onclick="closeProfile('profile-smirnov')">&times;</button>
         <h2>Смирнов Лев — Вратарь</h2>
-        <p style="color: var(--text-sec);">Надежный вратарь, часто спасает команду в сложных ситуациях.</p>
+        <p style="color: var(--text-sec);">Надежная стена ворот. Отлично реагирует на удары с близкого расстояния.</p>
         <div style="margin: 20px 0; padding: 15px; background: #0f172a; border-radius: 8px;">
             <p><strong>Матчи:</strong> 20 | <strong>Сейвы:</strong> 15 | <strong>Пропущено:</strong> 3</p>
         </div>
         <a href="#players-grid" class="back-btn">← Вернуться к составу</a>
     </div>
 
-    <!-- Общая таблица статистики -->
-    <h2>📊 Общая таблица статистики</h2>
+    <!-- Таблица статистики -->
     <div class="table-container">
+        <h2>Полная таблица статистики</h2>
         <table>
             <thead>
                 <tr>
@@ -288,7 +275,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><a href="#profile-stogov" class="table-name-link">Стогов Артур</a></td>
+                    <td><a href="#" class="table-name-link" onclick="showProfile('profile-stogov')">Стогов Артур</a></td>
                     <td>Левый фланговый атакующий</td>
                     <td>20</td>
                     <td>15</td>
@@ -297,7 +284,7 @@
                     <td>-</td>
                 </tr>
                 <tr>
-                    <td><a href="#profile-pokskonnoy" class="table-name-link">Посканной Никита</a></td>
+                    <td><a href="#" class="table-name-link" onclick="showProfile('profile-pokskonnoy')">Посканной Никита</a></td>
                     <td>Правый фланговый атакующий</td>
                     <td>50</td>
                     <td>45</td>
@@ -306,16 +293,16 @@
                     <td>-</td>
                 </tr>
                 <tr>
-                    <td><a href="#profile-grankin" class="table-name-link">Гранкин Александр</a></td>
+                    <td><a href="#" class="table-name-link" onclick="showProfile('profile-grankin')">Гранкин Александр</a></td>
                     <td>Левый защитник</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
-                    <td>-</td><td>-</td>
+                    <td>-</td>
+                    <td>-</td>
                 </tr>
                 <tr>
-                    <td><a href="#profile-klyshnikov" class="table-name-link">Клышников Максим</a></td>
-                    <td>Правый защитник</td>
+                    <td><a href="#" class="table-name-link" onclick="showProfile('profile-klyshnikov')">Клышников Максим</a></td><td>Правый защитник</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
@@ -323,10 +310,10 @@
                     <td>-</td>
                 </tr>
                 <tr>
-                    <td><a href="#profile-smirnov" class="table-name-link">Смирнов Лев</a></td>
+                    <td><a href="#" class="table-name-link" onclick="showProfile('profile-smirnov')">Смирнов Лев</a></td>
                     <td>Вратарь</td>
                     <td>20</td>
-                    <td>-</td>
+                    <td>0</td>
                     <td>-</td>
                     <td>15</td>
                     <td>3</td>
@@ -335,14 +322,20 @@
         </table>
     </div>
 
+    <!-- ВАЖНО: Этот блок отвечает за работу кнопок -->
     <script>
         function showProfile(profileId) {
-            const profiles = document.querySelectorAll('.profile-section');
-            profiles.forEach(profile => profile.classList.remove('active'));
+            // Скрываем все профили
+            const allProfiles = document.querySelectorAll('.profile-section');
+            allProfiles.forEach(profile => {
+                profile.classList.remove('active');
+            });
             
+            // Показываем нужный
             const targetProfile = document.getElementById(profileId);
             if (targetProfile) {
                 targetProfile.classList.add('active');
+                // Прокрутка к профилю
                 targetProfile.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
