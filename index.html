@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Статистика команды 7Д</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #38bdf8;
+            --text-main: #e2e8f0;
+            --text-sec: #94a3b8;
+            --border: #334155;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        /* Сетка карточек */
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+        .player-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .player-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2);
+            background: #334155;
+        }
+        .initials-circle {
+            width: 80px;
+            height: 80px;
+            background: #0f172a;
+            border-radius: 50%;
+            border: 3px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto 15px;
+            color: var(--accent);
+        }
+        .player-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-main);
+        }
+        .player-pos {
+            color: var(--text-sec);
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            font-size: 0.9rem;
+        }
+        .stat-col { text-align: center; }
+        .stat-val {
+            display: block;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        /* Секции профилей (скрыты по умолчанию) */
+        .profile-section {
+            max-width: 800px;
+            margin: 0 auto 60px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            border-left: 5px solid var(--accent);
+            display: none; /* Скрываем все секции */
+            animation: fadeIn 0.5s;
+            position: relative;
+        }
+        .profile-section.active { display: block; } /* Показываем активную */
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--text-sec);
+            text-decoration: none;
+            border: 1px solid var(--text-sec);
+            padding: 8px 16px;
+            border-radius: 6px;
+        }
+        .back-btn:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* Таблица */
+        .table-container {
+            overflow-x: auto;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: #0f172a;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+        .table-name-link {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .table-name-link:hover { color: var(--accent); }
+
+        /* Кнопка закрытия профиля (крестик) */
+        .close-profile {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-sec);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .close-profile:hover { color: var(--accent); }
+    </style>
+</head>
+<body>
+
+    <h1>⚽ Статистика команды 7Д</h1>
+
+    <!-- Сетка карточек -->
+    <div class="players-grid">
+        <!-- Карточка Артура -->
+        <div class="player-card" onclick="showProfile('profile-stogov')">
+            <div class="initials-circle">СА</div>
+            <span class="player-name">Стогов Артур</span>
+            <span class="player-pos">Левый фланговый атакующий</span>
+            <div class="stats-row">
+                <div class="stat-col"><span class="stat-val">20</span> Матчи</div>
+                <div class="stat-col"><span class="stat-val">15</span> Голы</div>
+            </div>
+        </div>
+
+        <!-- Карточка Никиты -->
+        <div class="player-card" onclick="showProfile('profile-pokskonnoy')">
+            <div class="initials-circle">ПН</div>
+            <span class="player-name">Посканной Никита</span>
+            <span class="player-pos">Правый фланговый атакующий</span>
+            <div class="stats-row">
+                <div class="stat-col"><span class="stat-val">50</span> Матчи</div>
+                <div class="stat-col"><span class="stat-val">45</span> Голы</div>
+            </div>
+        </div>
+
+        <!-- Карточка Александра -->
+        <div class="player-card" onclick="showProfile('profile-grankin')">
+            <div class="initials-circle">ГА</div>
+            <span class="player-name">Гранкин Александр</span>
+            <span class="player-pos">Левый защитник</span>
+            <div class="stats-row">
+                <div class="stat-col"><span class="stat-val">0</span> Матчи</div>
+                <div class="stat-col"><span class="stat-val">0</span> Голы</div>
+            </div>
+        </div>
+
+        <!-- Карточка Максима -->
+        <div class="player-card" onclick="showProfile('profile-klyshnikov')">
+            <div class="initials-circle">КМ</div>
+            <span class="player-name">Клышников Максим</span>
+            <span class="player-pos">Правый защитник</span>
+            <div class="stats-row">
+                <div class="stat-col"><span class="stat-val">0</span> Матчи</div>
+                <div class="stat-col"><span class="stat-val">0</span> Голы</div>
+            </div>
+        </div>
+
+        <!-- Карточка Льва -->
+        <div class="player-card" onclick="showProfile('profile-smirnov')">
+            <div class="initials-circle">СЛ</div>
+            <span class="player-name">Смирнов Лев</span>
+            <span class="player-pos">Вратарь</span>
+            <div class="stats-row">
+                <div class="stat-col"><span class="stat-val">20</span> Матчи</div>
+                <div class="stat-col"><span class="stat-val">0</span> Голы</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Секции профилей (подробная статистика игроков) -->
+    
+    <!-- Профиль Артура -->
+    <div id="profile-stogov" class="profile-section">
+        <button class="close-profile" onclick="closeProfile('profile-stogov')">&times;</button>
+        <h2>Стогов Артур — Левый фланговый атакующий</h2>
+        <p style="color: var(--text-sec);">Лучший дриблер команды. Отлично играет на левом фланге, часто делает голевые передачи.</p><div style="margin: 20px 0; padding: 15px; background: #0f172a; border-radius: 8px;">
+            <p><strong>Матчи:</strong> 20 | <strong>Голы:</strong> 15 | <strong>Пасы:</strong> 5</p>
+            <p><strong>Сейвы:</strong> 0 | <strong>Пропущено:</strong> -</p>
+        </div>
+        <a href="#players-grid" class="back-btn">← Вернуться к составу</a>
+    </div>
+
+    <!-- Профиль Никиты -->
+    <div id="profile-pokskonnoy" class="profile-section">
+        <button class="close-profile" onclick="closeProfile('profile-pokskonnoy')">&times;</button>
+        <h2>Посканной Никита — Правый фланговый атакующий</h2>
+        <p style="color: var(--text-sec);">Главный бомбардир команды. Лидер по количеству голов и матчей.</p>
+        <div style="margin: 20px 0; padding: 15px; background: #0f172a; border-radius: 8px;">
+            <p><strong>Матчи:</strong> 50 | <strong>Голы:</strong> 45 | <strong>Пасы:</strong> 25</p>
+            <p><strong>Сейвы:</strong> 0 | <strong>Пропущено:</strong> -</p>
+        </div>
+        <a href="#players-grid" class="back-btn">← Вернуться к составу</a>
+    </div>
+
+    <!-- Профиль Александра -->
+    <div id="profile-grankin" class="profile-section">
+        <button class="close-profile" onclick="closeProfile('profile-grankin')">&times;</button>
+        <h2>Гранкин Александр — Левый защитник</h2>
+        <p style="color: var(--text-sec);">Надежный защитник, редко ошибается в обороне.</p>
+        <div style="margin: 20px 0; padding: 15px; background: #0f172a; border-radius: 8px;">
+            <p><strong>Матчи:</strong> 0 | <strong>Голы:</strong> 0 | <strong>Пасы:</strong> 0</p>
+            <p><strong>Сейвы:</strong> 0 | <strong>Пропущено:</strong> -</p>
+        </div>
+        <a href="#players-grid" class="back-btn">← Вернуться к составу</a>
+    </div>
+
+    <!-- Профиль Максима -->
+    <div id="profile-klyshnikov" class="profile-section">
+        <button class="close-profile" onclick="closeProfile('profile-klyshnikov')">&times;</button>
+        <h2>Клышников Максим — Правый защитник</h2>
+        <p style="color: var(--text-sec);">Уверенно закрывает правую бровку, хорошо читает игру.</p>
+        <div style="margin: 20px 0; padding: 15px; background: #0f172a; border-radius: 8px;">
+            <p><strong>Матчи:</strong> 0 | <strong>Голы:</strong> 0 | <strong>Пасы:</strong> 0</p>
+            <p><strong>Сейвы:</strong> 0 | <strong>Пропущено:</strong> -</p>
+        </div>
+        <a href="#players-grid" class="back-btn">← Вернуться к составу</a>
+    </div>
+
+    <!-- Профиль Льва -->
+    <div id="profile-smirnov" class="profile-section">
+        <button class="close-profile" onclick="closeProfile('profile-smirnov')">&times;</button>
+        <h2>Смирнов Лев — Вратарь</h2>
+        <p style="color: var(--text-sec);">Надежный вратарь, часто спасает команду в сложных ситуациях.</p>
+        <div style="margin: 20px 0; padding: 15px; background: #0f172a; border-radius: 8px;">
+            <p><strong>Матчи:</strong> 20 | <strong>Голы:</strong> 0 | <strong>Пасы:</strong> 0</p>
+            <p><strong>Сейвы:</strong> 15 | <strong>Пропущено:</strong> 3</p>
+        </div>
+        <a href="#players-grid" class="back-btn">← Вернуться к составу</a>
+    </div>
+
+    <!-- Общая таблица статистики -->
+    <h2>📊 Общая таблица статистики</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Игрок</th>
+                    <th>Позиция</th>
+                    <th>Матчи</th>
+                    <th>Голы</th>
+                    <th>Пасы</th>
+                    <th>Сейвы</th>
+                    <th>Пропущено</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="#profile-stogov" class="table-name-link">Стогов Артур</a></td>
+                    <td>Левый фланговый атакующий</td>
+                    <td>20</td>
+                    <td>15</td>
+                    <td>5</td>
+                    <td>-</td><td>-</td>
+                </tr>
+                <tr>
+                    <td><a href="#profile-pokskonnoy" class="table-name-link">Посканной Никита</a></td>
+                    <td>Правый фланговый атакующий</td>
+                    <td>50</td>
+                    <td>45</td>
+                    <td>25</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td><a href="#profile-grankin" class="table-name-link">Гранкин Александр</a></td>
+                    <td>Левый защитник</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td><a href="#profile-klyshnikov" class="table-name-link">Клышников Максим</a></td>
+                    <td>Правый защитник</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td><a href="#profile-smirnov" class="table-name-link">Смирнов Лев</a></td>
+                    <td>Вратарь</td>
+                    <td>20</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>15</td>
+                    <td>3</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function showProfile(profileId) {
+            // Скрываем все профили
+            const profiles = document.querySelectorAll('.profile-section');
+            profiles.forEach(profile => profile.classList.remove('active'));
+            
+            // Показываем нужный
+            const targetProfile = document.getElementById(profileId);
+            if (targetProfile) {
+                targetProfile.classList.add('active');
+                // Плавно скроллим к профилю
+                targetProfile.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function closeProfile(profileId) {
+            const targetProfile = document.getElementById(profileId);
+            if (targetProfile) {
+                targetProfile.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
