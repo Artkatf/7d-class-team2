@@ -8,11 +8,13 @@
 :root {
   --primary: #2c3e50;
   --accent: #e74c3c;
+  --captain-color: #f1c40f; /* Золотой цвет для капитана */
   --bg: #f4f4f4;
   --card-bg: #fff;
   --border: #ddd;
+  --text: #333;
 }
-body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: var(--bg); color: #333; }
+body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--text); }
 header { background: var(--primary); color: #fff; padding: 1rem 0; }
 .container { max-width: 1200px; margin: auto; padding: 0 1rem; }
 nav.class-tabs { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; margin-top: 1.5rem; }
@@ -23,8 +25,27 @@ table { width: 100%; border-collapse: collapse; background: var(--card-bg); box-
 th, td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: center; }
 th { background: var(--primary); color: #fff; }
 .players-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-top: 2rem; }
-.player-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; cursor: pointer; transition: transform .2s, box-shadow .2s; height: 100%; }
+.player-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; cursor: pointer; transition: transform .2s, box-shadow .2s; height: 100%; position: relative; }
 .player-card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,.15); }
+
+/* Стили для капитана в сетке */
+.player-card.is-captain {
+  border-color: var(--captain-color);
+  box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.2);
+}
+.captain-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--captain-color);
+  color: #000;
+  font-weight: bold;
+  font-size: 0.8rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
 .player-name { font-size: 1.1rem; font-weight: bold; margin-bottom: .3rem; }
 .player-pos { color: #555; font-size: .9rem; margin-bottom: .5rem; }
 .player-num { display: inline-block; background: #eee; padding: 2px 8px; border-radius: 4px; font-weight: bold; }
@@ -37,14 +58,14 @@ th { background: var(--primary); color: #fff; }
 .close-modal { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888; }
 .close-modal:hover { color: #000; }
 .modal-photo-frame { width: 400px; height: 400px; background: #eee; border: 2px solid #ccc; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; color: #777; font-size: .9rem; overflow: hidden; }
+.modal-photo-frame img { width: 100%; height: 100%; object-fit: cover; }
 @media (max-width: 600px) { .modal-photo-frame { width: 200px; height: 200px; } .modal { width: 95%; } }
 .modal h2 { margin-top: 0; }
 .modal-info-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
 .modal-field { flex: 1 1 200px; }
 .modal-field strong { display: block; color: #555; font-size: .85rem; }
 .modal-field span { font-weight: bold; }
-.modal-stats { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee; }
-.contact-row { margin-top: 1rem; padding: 1rem; background: #f9f9f9; border-radius: 8px; text-align: center; }
+.modal-stats { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee; }.contact-row { margin-top: 1rem; padding: 1rem; background: #f9f9f9; border-radius: 8px; text-align: center; }
 .contact-row strong { color: var(--primary); }
 </style>
 </head>
@@ -56,10 +77,11 @@ th { background: var(--primary); color: #fff; }
 </header>
 <div class="container">
   <nav class="class-tabs">
-    <button class="tab-btn active" data-class="7А">7А</button>
+    <button class="tab-btn" data-class="7А">7А</button>
     <button class="tab-btn" data-class="7Б">7Б</button>
-    <button class="tab-btn" data-class="7В">7В</button><button class="tab-btn" data-class="7Г">7Г</button>
-    <button class="tab-btn" data-class="7Д">7Д</button>
+    <button class="tab-btn" data-class="7В">7В</button>
+    <button class="tab-btn" data-class="7Г">7Г</button>
+    <button class="tab-btn active" data-class="7Д">7Д</button>
     <button class="tab-btn" data-class="7Е">7Е</button>
     <button class="tab-btn" data-class="7Ж">7Ж</button>
     <button class="tab-btn" data-class="7З">7З</button>
@@ -108,7 +130,6 @@ th { background: var(--primary); color: #fff; }
 </div>
 
 <script>
-// ИСПРАВЛЕННЫЕ ДАННЫЕ: теперь пустые классы содержат пустые массивы , а не ломают JS
 const playersData = {
   '7А': ,
   '7Б': ,
@@ -122,9 +143,10 @@ const playersData = {
       dob: 2013,
       transfer: '6В → 7Д',
       stats: {matches: '-', goals: '-', assists: '-'},
-      photo: null,
+      photo: 'stogov.jpg',
       transferPrice: '4500 €',
-      contactPhone: '8 919 56 53 760'
+      contactPhone: '8 919 56 53 760',
+      isCaptain: false
     },
     {
       name: 'Посканной Никита',
@@ -133,8 +155,9 @@ const playersData = {
       dob: 2013,
       transfer: 'остался в 7Д',
       stats: {matches: '-', goals: '-', assists: '-'},
-      photo: null,
-      transferPrice: '5000 €'
+      photo: 'pos.jpg',
+      transferPrice: '5000 €',
+      isCaptain: true // Флаг капитана
     },
     {
       name: 'Гранкин Александр',
@@ -143,8 +166,8 @@ const playersData = {
       dob: 2014,
       transfer: 'остался в 7Д',
       stats: {matches: '-', goals: '-', assists: '-'},
-      photo: null,
-      transferPrice: 'Бесплатно'
+      transferPrice: 'Бесплатно',
+      isCaptain: false
     },
     {
       name: 'Клышников Максим',
@@ -153,8 +176,8 @@ const playersData = {
       dob: 2014,
       transfer: 'остался в 7Д',
       stats: {matches: '-', goals: '-', assists: '-'},
-      photo: null,
-      transferPrice: 'Бесплатно'
+      transferPrice: 'Бесплатно',
+      isCaptain: false
     },
     {
       name: 'Смирнов Лев',
@@ -163,14 +186,12 @@ const playersData = {
       dob: 2013,
       transfer: '6В → 7Д',
       stats: {matches: '-', saves: '-', conceded: '-'},
-      photo: null,
       transferPrice: '1500 €',
-      contactPhone: '8 912 06 22 942'
+      isCaptain: false
     }
   ],
   '7Е': ,
-  '7Ж': ,
-  '7З': 
+  '7Ж': ,'7З': 
 };
 
 const leagueData = [
@@ -188,11 +209,13 @@ const PAGE_SIZE = 12;
 let currentClass = '7Д';
 let currentPage = 1;
 
-function renderLeagueTable() {const tb = document.querySelector('#league-table');
+function renderLeagueTable() {
+  const tb = document.querySelector('#league-table');
+  if (!tb) return;
   tb.innerHTML = '';
   leagueData.forEach(r => {
-    const a = r.cls === currentClass ? ' style="background:#ffe6e6"' : '';
     const tr = document.createElement('tr');
+    const a = r.cls === currentClass ? ' style="background:#ffe6e6"' : '';
     tr.innerHTML = '<td' + a + '>' + r.cls + '</td><td>' + r.g + '</td><td>' + r.w + '</td><td>' + r.d + '</td><td>' + r.l + '</td><td>' + r.pts + '</td>';
     tb.appendChild(tr);
   });
@@ -200,6 +223,7 @@ function renderLeagueTable() {const tb = document.querySelector('#league-table')
 
 function renderPlayersGrid() {
   const grid = document.getElementById('players-grid');
+  if (!grid) return;
   const players = playersData[currentClass] || ;
   const start = (currentPage - 1) * PAGE_SIZE;
   const end = start + PAGE_SIZE;
@@ -214,9 +238,16 @@ function renderPlayersGrid() {
 
   pp.forEach(p => {
     const card = document.createElement('div');
-    card.className = 'player-card';
+    card.className = 'player-card' + (p.isCaptain ? ' is-captain' : '');
     card.onclick = () => openPlayerModal(p);
-    card.innerHTML = '<div class="player-name">' + p.name + '</div><div class="player-pos">' + p.pos + '</div><div><span class="player-num">' + p.num + '</span></div>';
+    
+    // В карточке: Имя, Позиция. Номер убран по запросу.
+    // Добавлен бейдж "Капитан" для Никиты
+    let captainBadgeHtml = p.isCaptain ? '<div class="captain-badge">Капитан</div>' : '';
+    
+    card.innerHTML = captainBadgeHtml + 
+                     '<div class="player-name">' + p.name + '</div>' + 
+                     '<div class="player-pos">' + p.pos + '</div>';
     grid.appendChild(card);
   });
   renderPagination(players.length);
@@ -224,6 +255,7 @@ function renderPlayersGrid() {
 
 function renderPagination(total) {
   const el = document.getElementById('pagination');
+  if (!el) return;
   el.innerHTML = '';
   const tp = Math.max(1, Math.ceil(total / PAGE_SIZE));
   if (tp <= 1) return;
@@ -237,14 +269,23 @@ function renderPagination(total) {
 }
 
 function openPlayerModal(player) {
-  document.getElementById('player-modal').classList.add('show');
+  const modal = document.getElementById('player-modal');
+  if (!modal) return;
+  modal.classList.add('show');
   document.getElementById('modal-name').textContent = player.name;
   document.getElementById('modal-pos').textContent = player.pos;
   document.getElementById('modal-num').textContent = player.num;
   document.getElementById('modal-class').textContent = currentClass;
   document.getElementById('modal-dob').textContent = player.dob;
   document.getElementById('modal-age').textContent = new Date().getFullYear() - player.dob;
-  document.getElementById('modal-transfer').textContent = player.transfer;
+  
+  // Логика отображения статуса капитана в модальном окне
+  let transferText = player.transfer;
+  if (player.isCaptain) {
+    transferText += '<br><span style="color:var(--captain-color);font-weight:bold;display:block;margin-top:5px;">Капитан команды 7Д</span>';
+  }
+  document.getElementById('modal-transfer').innerHTML = transferText;
+  
   document.getElementById('modal-transfer-price').textContent = player.transferPrice || '—';
 
   const cb = document.getElementById('modal-contact-block');
@@ -258,9 +299,8 @@ function openPlayerModal(player) {
 
   const mf = document.getElementById('modal-photo-frame');
   if (player.photo) {
-    mf.innerHTML = '<img src="' + player.photo + '" alt="' + player.name + '">';
-  } else {
-    mf.innerHTML = player.name + ' (нет фото)';
+    mf.innerHTML = '<img src="' + player.photo + '" alt="' + player.name + '">';} else {
+    mf.innerHTML = 'Нет фото';
   }
 
   let st = '';
@@ -273,7 +313,8 @@ function openPlayerModal(player) {
 }
 
 function closeModal() {
-  document.getElementById('player-modal').classList.remove('show');
+  const modal = document.getElementById('player-modal');
+  if (modal) modal.classList.remove('show');
 }
 
 document.getElementById('close-modal').addEventListener('click', closeModal);
@@ -288,15 +329,12 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    currentClass = btn.getAttribute('data-class');currentPage = 1;
+    currentClass = btn.getAttribute('data-class');
+    currentPage = 1;
     renderLeagueTable();
     renderPlayersGrid();
   });
 });
-
-// ОТЛАДКА: выводим в консоль, что данные загружены
-console.log('Данные игроков загружены:', playersData);
-console.log('Текущий класс:', currentClass);
 
 renderLeagueTable();
 renderPlayersGrid();
