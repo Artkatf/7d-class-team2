@@ -12,224 +12,54 @@
   --card-bg: #fff;
   --border: #ddd;
 }
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: var(--bg);
-  color: #333;
-}
-header {
-  background: var(--primary);
-  color: #fff;
-  padding: 1rem 0;
-}
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 1rem;
-}
-nav.class-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .5rem;
-  justify-content: center;
-  margin-top: 1.5rem;
-}
-.class-tabs button {
-  padding: .75rem 1.25rem;
-  border: none;
-  background: #fff;
-  color: var(--primary);
-  cursor: pointer;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 1rem;
-}
-.class-tabs button.active {
-  background: var(--accent);
-  color: #fff;
-}
-.stats-table-wrapper {
-  overflow-x: auto;
-  margin-top: 1.5rem;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--card-bg);
-  box-shadow: 0 2px 6px rgba(0,0,0,.1);
-}
-th, td {
-  border: 1px solid var(--border);
-  padding: .6rem .8rem;
-  text-align: center;
-}
-th {
-  background: var(--primary);
-  color: #fff;
-}
-.players-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1rem;
-  margin-top: 2rem;
-}
-.player-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1rem;
-  cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-  height: 100%;
-}
-.player-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0,0,0,.15);
-}
-.player-name {
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-bottom: .3rem;
-}
-.player-pos {
-  color: #555;
-  font-size: .9rem;
-  margin-bottom: .5rem;
-}
-.player-num {
-  display: inline-block;
-  background: #eee;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-weight: bold;
-}
-.pagination {
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: center;
-  gap: .5rem;
-}
-.pagination button {
-  padding: .5rem .8rem;
-  border: 1px solid var(--border);
-  background: #fff;
-  cursor: pointer;
-  border-radius: 4px;
-}
-.pagination button.active {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
-}
-.modal-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,.6);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-.modal-overlay.show {
-  display: flex;
-}
-.modal {
-  background: #fff;
-  width: 90%;
-  max-width: 700px;
-  padding: 1.5rem;
-  border-radius: 12px;
-  position: relative;
-  box-shadow: 0 8px 24px rgba(0,0,0,.2);
-  max-height: 90vh;
-  overflow-y: auto;
-}
-.close-modal {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #888;
-}
-.close-modal:hover {
-  color: #000;
-}
-.modal-photo-frame {
-  width: 400px;
-  height: 400px;
-  background: #eee;
-  border: 2px solid #ccc;
-  margin: 0 auto 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #777;
-  font-size: .9rem;
-  overflow: hidden;
-}
-@media (max-width: 600px) {
-  .modal-photo-frame {
-    width: 200px;
-    height: 200px;
-  }
-  .modal {
-    width: 95%;
-  }
-}
-.modal h2 {
-  margin-top: 0;
-}
-.modal-info-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-.modal-field {
-  flex: 1 1 200px;
-}
-.modal-field strong {
-  display: block;
-  color: #555;
-  font-size: .85rem;
-}
-.modal-field span {
-  font-weight: bold;
-}
-.modal-stats {
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid #eee;
-}
-.contact-row {
-  margin-top: 1rem;
-  padding: 1rem;
-  background: #f9f9f9;
-  border-radius: 8px;
-  text-align: center;
-}
-.contact-row strong {
-  color: var(--primary);
-}
+body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: var(--bg); color: #333; }
+header { background: var(--primary); color: #fff; padding: 1rem 0; }
+.container { max-width: 1200px; margin: auto; padding: 0 1rem; }
+nav.class-tabs { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; margin-top: 1.5rem; }
+.class-tabs button { padding: .75rem 1.25rem; border: none; background: #fff; color: var(--primary); cursor: pointer; border-radius: 6px; font-weight: 600; font-size: 1rem; }
+.class-tabs button.active { background: var(--accent); color: #fff; }
+.stats-table-wrapper { overflow-x: auto; margin-top: 1.5rem; }
+table { width: 100%; border-collapse: collapse; background: var(--card-bg); box-shadow: 0 2px 6px rgba(0,0,0,.1); }
+th, td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: center; }
+th { background: var(--primary); color: #fff; }
+.players-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-top: 2rem; }
+.player-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; cursor: pointer; transition: transform .2s, box-shadow .2s; height: 100%; }
+.player-card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,.15); }
+.player-name { font-size: 1.1rem; font-weight: bold; margin-bottom: .3rem; }
+.player-pos { color: #555; font-size: .9rem; margin-bottom: .5rem; }
+.player-num { display: inline-block; background: #eee; padding: 2px 8px; border-radius: 4px; font-weight: bold; }
+.pagination { margin-top: 1.5rem; display: flex; justify-content: center; gap: .5rem; }
+.pagination button { padding: .5rem .8rem; border: 1px solid var(--border); background: #fff; cursor: pointer; border-radius: 4px; }
+.pagination button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,.6); display: none; justify-content: center; align-items: center; z-index: 1000; }
+.modal-overlay.show { display: flex; }
+.modal { background: #fff; width: 90%; max-width: 700px; padding: 1.5rem; border-radius: 12px; position: relative; box-shadow: 0 8px 24px rgba(0,0,0,.2); max-height: 90vh; overflow-y: auto; }
+.close-modal { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888; }
+.close-modal:hover { color: #000; }
+.modal-photo-frame { width: 400px; height: 400px; background: #eee; border: 2px solid #ccc; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; color: #777; font-size: .9rem; overflow: hidden; }
+@media (max-width: 600px) { .modal-photo-frame { width: 200px; height: 200px; } .modal { width: 95%; } }
+.modal h2 { margin-top: 0; }
+.modal-info-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
+.modal-field { flex: 1 1 200px; }
+.modal-field strong { display: block; color: #555; font-size: .85rem; }
+.modal-field span { font-weight: bold; }
+.modal-stats { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee; }
+.contact-row { margin-top: 1rem; padding: 1rem; background: #f9f9f9; border-radius: 8px; text-align: center; }
+.contact-row strong { color: var(--primary); }
 </style>
 </head>
 <body>
 <header>
-  <div class="container"><h1 style="margin:0;font-size:1.4rem">Футбольные составы 7А–7З</h1>
+  <div class="container">
+    <h1 style="margin:0;font-size:1.4rem">Футбольные составы 7А–7З</h1>
   </div>
 </header>
 <div class="container">
   <nav class="class-tabs">
-    <button class="tab-btn" data-class="7А">7А</button>
+    <button class="tab-btn active" data-class="7А">7А</button>
     <button class="tab-btn" data-class="7Б">7Б</button>
-    <button class="tab-btn" data-class="7В">7В</button>
-    <button class="tab-btn" data-class="7Г">7Г</button>
-    <button class="tab-btn active" data-class="7Д">7Д</button>
+    <button class="tab-btn" data-class="7В">7В</button><button class="tab-btn" data-class="7Г">7Г</button>
+    <button class="tab-btn" data-class="7Д">7Д</button>
     <button class="tab-btn" data-class="7Е">7Е</button>
     <button class="tab-btn" data-class="7Ж">7Ж</button>
     <button class="tab-btn" data-class="7З">7З</button>
@@ -278,7 +108,7 @@ th {
 </div>
 
 <script>
-// Данные игроков
+// Данные игроков — теперь синтаксис полностью валиден
 const playersData = {
   '7А': ,
   '7Б': ,
@@ -305,7 +135,6 @@ const playersData = {
       stats: {matches: '-', goals: '-', assists: '-'},
       photo: null,
       transferPrice: '5000 €'
-      // У Никиты нет contactPhone, значит кнопки не будет
     },
     {
       name: 'Гранкин Александр',
@@ -316,7 +145,6 @@ const playersData = {
       stats: {matches: '-', goals: '-', assists: '-'},
       photo: null,
       transferPrice: 'Бесплатно'
-      // У Александра нет contactPhone
     },
     {
       name: 'Клышников Максим',
@@ -327,7 +155,6 @@ const playersData = {
       stats: {matches: '-', goals: '-', assists: '-'},
       photo: null,
       transferPrice: 'Бесплатно'
-      // У Максима нет contactPhone
     },
     {
       name: 'Смирнов Лев',
@@ -338,7 +165,7 @@ const playersData = {
       stats: {matches: '-', saves: '-', conceded: '-'},
       photo: null,
       transferPrice: '1500 €',
-      contactPhone: '8 912 06 22 942' // Номер Льва (твой новый номер)
+      contactPhone: '8 912 06 22 942' // Номер Льва
     }
   ],
   '7Е': ,
@@ -346,7 +173,8 @@ const playersData = {
   '7З': 
 };
 
-const leagueData = [{cls:'7А',g:'-',w:'-',d:'-',l:'-',pts:'-'},
+const leagueData = [
+  {cls:'7А',g:'-',w:'-',d:'-',l:'-',pts:'-'},
   {cls:'7Б',g:'-',w:'-',d:'-',l:'-',pts:'-'},
   {cls:'7В',g:'-',w:'-',d:'-',l:'-',pts:'-'},
   {cls:'7Г',g:'-',w:'-',d:'-',l:'-',pts:'-'},
@@ -360,8 +188,7 @@ const PAGE_SIZE = 12;
 let currentClass = '7Д';
 let currentPage = 1;
 
-function renderLeagueTable() {
-  const tb = document.querySelector('#league-table');
+function renderLeagueTable() {const tb = document.querySelector('#league-table');
   tb.innerHTML = '';
   leagueData.forEach(r => {
     const a = r.cls === currentClass ? ' style="background:#ffe6e6"' : '';
@@ -420,7 +247,6 @@ function openPlayerModal(player) {
   document.getElementById('modal-transfer').textContent = player.transfer;
   document.getElementById('modal-transfer-price').textContent = player.transferPrice || '—';
 
-  // Логика показа кнопки "Связаться"
   const cb = document.getElementById('modal-contact-block');
   const cp = document.getElementById('modal-contact-phone');
   if (player.contactPhone) {
@@ -448,7 +274,9 @@ function openPlayerModal(player) {
 
 function closeModal() {
   document.getElementById('player-modal').classList.remove('show');
-}document.getElementById('close-modal').addEventListener('click', closeModal);
+}
+
+document.getElementById('close-modal').addEventListener('click', closeModal);
 document.getElementById('player-modal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
@@ -460,8 +288,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    currentClass = btn.getAttribute('data-class');
-    currentPage = 1;
+    currentClass = btn.getAttribute('data-class');currentPage = 1;
     renderLeagueTable();
     renderPlayersGrid();
   });
