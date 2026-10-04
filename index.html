@@ -108,7 +108,7 @@ th { background: var(--primary); color: #fff; }
 </div>
 
 <script>
-// Данные игроков — теперь синтаксис полностью валиден
+// ИСПРАВЛЕННЫЕ ДАННЫЕ: теперь пустые классы содержат пустые массивы , а не ломают JS
 const playersData = {
   '7А': ,
   '7Б': ,
@@ -124,7 +124,7 @@ const playersData = {
       stats: {matches: '-', goals: '-', assists: '-'},
       photo: null,
       transferPrice: '4500 €',
-      contactPhone: '8 919 56 53 760' // Номер Артура
+      contactPhone: '8 919 56 53 760'
     },
     {
       name: 'Посканной Никита',
@@ -165,7 +165,7 @@ const playersData = {
       stats: {matches: '-', saves: '-', conceded: '-'},
       photo: null,
       transferPrice: '1500 €',
-      contactPhone: '8 912 06 22 942' // Номер Льва
+      contactPhone: '8 912 06 22 942'
     }
   ],
   '7Е': ,
@@ -293,6 +293,10 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     renderPlayersGrid();
   });
 });
+
+// ОТЛАДКА: выводим в консоль, что данные загружены
+console.log('Данные игроков загружены:', playersData);
+console.log('Текущий класс:', currentClass);
 
 renderLeagueTable();
 renderPlayersGrid();
