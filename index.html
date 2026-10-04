@@ -20,19 +20,22 @@
             margin: 0;
             padding: 20px;
         }
-        h1, h2 {
+        h1 {
             text-align: center;
             color: var(--accent);
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
+
         /* Сетка карточек */
         .players-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
             max-width: 1200px;
-            margin: 0 auto 40px;
+            margin: 0 auto 60px;
         }
+
+        /* Карточка игрока (без фото) */
         .player-card {
             background: var(--card-bg);
             border-radius: 12px;
@@ -47,6 +50,8 @@
             box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2);
             background: #334155;
         }
+
+        /* Круг с инициалами */
         .initials-circle {
             width: 80px;
             height: 80px;
@@ -56,11 +61,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
             margin: 0 auto 15px;
             color: var(--accent);
         }
+
         .player-name {
             font-size: 1.1rem;
             font-weight: 600;
@@ -85,138 +91,151 @@
             color: var(--accent);
         }
 
-        /* Профиль игрока */
+        /* --- СТРАНИЦА ПРОФИЛЯ (ОТДЕЛЬНАЯ) --- */
         .profile-section {
-            max-width: 800px;
-            margin: 0 auto 60px;
+            max-width: 900px;
+            margin: 0 auto;
             background: var(--card-bg);
-            padding: 30px;
+            padding: 40px;
             border-radius: 16px;
             border-left: 5px solid var(--accent);
-            display: none;
-            animation: fadeIn 0.5s;
+            display: none; /* Скрыто по умолчанию */
+            animation: fadeIn 0.4s;
             position: relative;
         }
         .profile-section.active { display: block; }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Кнопка закрытия */
         .close-profile {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 20px;
+            right: 20px;
             background: none;
             border: none;
             color: var(--text-sec);
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
         }
         .close-profile:hover { color: var(--accent); }
 
-        /* Кнопка "Вернуться к составу" */
+        /* Заголовок профиля */
+        .profile-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 30px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        /* РАМКА ПОД ФОТО 400x400px */
+        .photo-frame {
+            width: 400px;
+            height: 400px;background: #0f172a;
+            border: 3px solid var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Обрезает лишнее, сохраняя пропорции */
+            display: block;
+        }
+        .photo-placeholder {
+            color: var(--text-sec);
+            font-size: 1.2rem;
+        }
+
+        .profile-info h2 {
+            margin: 0 0 10px 0;
+            color: var(--accent);
+        }
+        .profile-info p {
+            color: var(--text-sec);
+            margin: 8px 0;
+            font-size: 1rem;
+        }
+        .profile-info strong {
+            color: var(--text-main);
+        }
+
+        /* Блок статистики и трансфера */
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .detail-box {
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .detail-label {
+            display: block;
+            color: var(--text-sec);
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+        .detail-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        /* Кнопка назад */
         .back-btn {
             display: inline-block;
             margin-top: 20px;
-            padding: 10px 20px;
+            padding: 12px 24px;
             background: transparent;
             color: var(--accent);
             text-decoration: none;
             border: 1px solid var(--accent);
             border-radius: 6px;
             cursor: pointer;
+            font-size: 1rem;
         }
         .back-btn:hover { background: var(--accent); color: var(--bg-color); }
-
-        /* Пагинация */
-        .pagination {
-            display: flex;justify-content: center;
-            align-items: center;
-            gap: 6px;
-            margin: 20px auto 40px;
-            max-width: 1200px;
-        }
-        .page-btn {
-            padding: 8px 14px;
-            border: 1px solid var(--border);
-            background: var(--card-bg);
-            color: var(--text-main);
-            cursor: pointer;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: background 0.2s, border-color 0.2s;
-        }
-        .page-btn:hover { background: #334155; border-color: var(--accent); }
-        .page-btn.active {
-            background: var(--accent);
-            color: var(--bg-color);
-            border-color: var(--accent);
-        }
-        .page-btn:disabled {
-            color: var(--text-sec);
-            border-color: var(--border);
-            cursor: not-allowed;
-            opacity: 0.5;
-        }
-
-        /* Таблица */
-        .table-container {
-            overflow-x: auto;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: var(--card-bg);
-        }
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-        th {
-            background: #0f172a;
-            color: var(--accent);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-        }
-        .table-name-link {
-            color: var(--text-main);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .table-name-link:hover { color: var(--accent); }
-
-        /* Таблицы классов */
-        .class-section { display: none; }
-        .class-section.active { display: block; animation: fadeIn 0.3s; }
-        .class-label {
-            text-align: center;
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: var(--accent);
-            margin-bottom: 15px;
-        }
     </style>
 </head>
 <body>
 
     <h1>⚽ Статистика команды 7Д</h1>
 
-    <!-- Карточки игроков -->
+    <!-- Карточки игроков (без фото) -->
     <div class="players-grid" id="players-grid">
+        
         <!-- Артур -->
         <div class="player-card" onclick="showProfile('profile-stogov')">
-            <div class="photo-frame">
-        <img src="stogov.jpg" alt="Стогов Артур">
-    </div>
             <div class="initials-circle">СА</div>
             <span class="player-name">Стогов Артур</span>
             <span class="player-pos">Левый фланговый атакующий</span>
             <div class="stats-row">
                 <div class="stat-col"><span class="stat-val">0</span> Матчи</div>
                 <div class="stat-col"><span class="stat-val">0</span> Голы</div>
+            </div>
+        </div>
+
+        <!-- Лев -->
+        <div class="player-card" onclick="showProfile('profile-smirnov')">
+            <div class="initials-circle">СЛ</div>
+            <span class="player-name">Смирнов Лев</span>
+            <span class="player-pos">Вратарь</span>
+            <div class="stats-row">
+                <div class="stat-col"><span class="stat-val">0</span> Матчи</div>
+                <div class="stat-col"><span class="stat-val">0</span> Сейвы</div>
             </div>
         </div>
 
@@ -235,8 +254,7 @@
         <div class="player-card" onclick="showProfile('profile-grankin')">
             <div class="initials-circle">ГА</div>
             <span class="player-name">Гранкин Александр</span>
-            <span class="player-pos">Левый защитник</span>
-            <div class="stats-row">
+            <span class="player-pos">Левый защитник</span><div class="stats-row">
                 <div class="stat-col"><span class="stat-val">0</span> Матчи</div>
                 <div class="stat-col"><span class="stat-val">0</span> Голы</div>
             </div>
@@ -246,355 +264,245 @@
         <div class="player-card" onclick="showProfile('profile-klyshnikov')">
             <div class="initials-circle">КМ</div>
             <span class="player-name">Клышников Максим</span>
-            <span class="player-pos">Правый защитник</span><div class="stats-row">
+            <span class="player-pos">Правый защитник</span>
+            <div class="stats-row">
                 <div class="stat-col"><span class="stat-val">0</span> Матчи</div>
                 <div class="stat-col"><span class="stat-val">0</span> Голы</div>
             </div>
         </div>
 
-        <!-- Лев (Вратарь) -->
-        <div class="player-card" onclick="showProfile('profile-smirnov')">
-            <div class="initials-circle">СЛ</div>
-            <span class="player-name">Смирнов Лев</span>
-            <span class="player-pos">Вратарь</span>
-            <div class="stats-row">
-                <div class="stat-col"><span class="stat-val">0</span> Матчи</div>
-                <div class="stat-col"><span class="stat-val">0</span> Сейвы</div>
-            </div>
-        </div>
     </div>
 
-    <!-- Секции профилей -->
+    <!-- ПРОФИЛИ ИГРОКОВ (ОТДЕЛЬНЫЕ СТРАНИЦЫ) -->
+
+    <!-- Профиль Артура -->
     <div id="profile-stogov" class="profile-section">
         <button class="close-profile" onclick="closeProfile('profile-stogov')">&times;</button>
-        <h2>Стогов Артур — Левый фланговый атакующий</h2>
-        <p style="color: var(--text-sec);">Статистика обновлена.</p>
-        <div style="margin: 20px 0; padding: 15px; background: #0f172a; border-radius: 8px;">
-            <p><strong>Матчи:</strong> 0 | <strong>Голы:</strong> 0 | <strong>Пасы:</strong> 0</p>
+        <div class="profile-header">
+            <!-- Рамка 400x400px -->
+            <div class="photo-frame">
+                <!-- Сюда загрузите фото: src="stogov-artur.jpg" -->
+                <span class="photo-placeholder">Фото игрока (400x400)</span>
+            </div>
+            <div class="profile-info">
+                <h2>Стогов Артур</h2>
+                <p>Позиция: <strong>Левый фланговый атакующий</strong></p>
+                <p>Год рождения: <strong>2013</strong></p>
+                <p>Возраст: <strong id="age-stogov">Загрузка...</strong></p>
+                <p>Трансфер: <strong style="color: var(--accent);">6В → 7Д</strong></p>
+            </div>
         </div>
-        <a href="#players-grid" class="back-btn">← Вернуться к составу</a>
+
+        <div class="details-grid">
+            <div class="detail-box">
+                <span class="detail-label">Матчи</span>
+                <span class="detail-value">0</span>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Голы</span>
+                <span class="detail-value">0</span>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Пасы</span>
+                <span class="detail-value">0</span>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Сейвы</span>
+                <span class="detail-value">-</span>
+            </div>
+        </div>
+        <button class="back-btn" onclick="closeProfile('profile-stogov')">← Вернуться к составу</button>
     </div>
 
-    <div id="profile-pokskonnoy" class="profile-section">
-        <button class="close-profile" onclick="closeProfile('profile-pokskonnoy')">&times;</button>
-        <h2>Посканной Никита — Правый фланговый атакующий</h2>
-        <p style="color: var(--text-sec);">Статистика обновлена.</p>
-        <div style="margin: 20px 0; padding: 15px; background: #0f172a; border-radius: 8px;">
-            <p><strong>Матчи:</strong> 0 | <strong>Голы:</strong> 0 | <strong>Пасы:</strong> 0</p>
-        </div>
-        <a href="#players-grid" class="back-btn">← Вернуться к составу</a>
-    </div>
-
-    <div id="profile-grankin" class="profile-section">
-        <button class="close-profile" onclick="closeProfile('profile-grankin')">&times;</button>
-        <h2>Гранкин Александр — Левый защитник</h2>
-        <p style="color: var(--text-sec);">Статистика обновлена.</p>
-        <div style="margin: 20px 0; padding: 15px; background: #0f172a; border-radius: 8px;">
-            <p><strong>Матчи:</strong> 0 | <strong>Голы:</strong> 0 | <strong>Пасы:</strong> 0</p>
-        </div>
-        <a href="#players-grid" class="back-btn">← Вернуться к составу</a>
-    </div>
-
-    <div id="profile-klyshnikov" class="profile-section">
-        <button class="close-profile" onclick="closeProfile('profile-klyshnikov')">&times;</button>
-        <h2>Клышников Максим — Правый защитник</h2>
-        <p style="color: var(--text-sec);">Статистика обновлена.</p>
-        <div style="margin: 20px 0; padding: 15px; background: #0f172a; border-radius: 8px;">
-            <p><strong>Матчи:</strong> 0 | <strong>Голы:</strong> 0 | <strong>Пасы:</strong> 0</p>
-        </div>
-        <a href="#players-grid" class="back-btn">← Вернуться к составу</a>
-    </div>
-
+    <!-- Профиль Льва -->
     <div id="profile-smirnov" class="profile-section">
         <button class="close-profile" onclick="closeProfile('profile-smirnov')">&times;</button>
-        <h2>Смирнов Лев — Вратарь</h2>
-        <p style="color: var(--text-sec);">Статистика обновлена.</p>
-        <div style="margin: 20px 0; padding: 15px; background: #0f172a; border-radius: 8px;">
-            <p><strong>Матчи:</strong> 0 | <strong>Сейвы:</strong> 0 | <strong>Пропущено:</strong> 0</p>
+        <div class="profile-header">
+            <div class="photo-frame">
+                <span class="photo-placeholder">Фото игрока (400x400)</span>
+            </div>
+            <div class="profile-info">
+                <h2>Смирнов Лев</h2>
+                <p>Позиция: <strong>Вратарь</strong></p>
+                <p>Год рождения: <strong>2013</strong></p>
+                <p>Возраст: <strong id="age-smirnov">Загрузка...</strong></p>
+                <p>Трансфер: <strong style="color: var(--accent);">6В → 7Д</strong></p>
+            </div>
         </div>
-        <a href="#players-grid" class="back-btn">← Вернуться к составу</a>
+
+        <div class="details-grid">
+            <div class="detail-box">
+                <span class="detail-label">Матчи</span>
+                <span class="detail-value">0</span>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Голы</span>
+                <span class="detail-value">-</span>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Пасы</span>
+                <span class="detail-value">-</span>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Сейвы</span>
+                <span class="detail-value">0</span>
+            </div>
+        </div><button class="back-btn" onclick="closeProfile('profile-smirnov')">← Вернуться к составу</button>
     </div>
 
-    <!-- Пагинация под карточками (страницы игроков) -->
-    <div class="pagination" id="player-pagination"></div>
-
-    <!-- Таблицы по классам -->
-    <h2>📊 Полная таблица статистики</h2>
-
-    <!-- 7Д -->
-    <div class="class-section active" id="class-1">
-        <div class="class-label">7Д</div>
-        <div class="table-container">
-            <table><thead>
-                    <tr>
-                        <th>Игрок</th><th>Позиция</th><th>Матчи</th><th>Голы</th><th>Пасы</th><th>Сейвы</th><th>Пропущено</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><a href="#" class="table-name-link" onclick="showProfile('profile-stogov')">Стогов Артур</a></td>
-                        <td>Левый фланговый атакующий</td><td>0</td><td>0</td><td>0</td><td>-</td><td>-</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="table-name-link" onclick="showProfile('profile-pokskonnoy')">Посканной Никита</a></td>
-                        <td>Правый фланговый атакующий</td><td>0</td><td>0</td><td>0</td><td>-</td><td>-</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="table-name-link" onclick="showProfile('profile-grankin')">Гранкин Александр</a></td>
-                        <td>Левый защитник</td><td>0</td><td>0</td><td>0</td><td>-</td><td>-</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="table-name-link" onclick="showProfile('profile-klyshnikov')">Клышников Максим</a></td>
-                        <td>Правый защитник</td><td>0</td><td>0</td><td>0</td><td>-</td><td>-</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="table-name-link" onclick="showProfile('profile-smirnov')">Смирнов Лев</a></td>
-                        <td>Вратарь</td><td>0</td><td>-</td><td>-</td><td>0</td><td>0</td>
-                    </tr>
-                </tbody>
-            </table>
+    <!-- Профиль Никиты -->
+    <div id="profile-pokskonnoy" class="profile-section">
+        <button class="close-profile" onclick="closeProfile('profile-pokskonnoy')">&times;</button>
+        <div class="profile-header">
+            <div class="photo-frame">
+                <span class="photo-placeholder">Фото игрока (400x400)</span>
+            </div>
+            <div class="profile-info">
+                <h2>Посканной Никита</h2>
+                <p>Позиция: <strong>Правый фланговый атакующий</strong></p>
+                <p>Год рождения: <strong>2013</strong></p>
+                <p>Возраст: <strong id="age-pokskonnoy">Загрузка...</strong></p>
+                <p>Трансфер: <strong>Остались в Д классе</strong></p>
+            </div>
         </div>
+
+        <div class="details-grid">
+            <div class="detail-box">
+                <span class="detail-label">Матчи</span>
+                <span class="detail-value">0</span>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Голы</span>
+                <span class="detail-value">0</span>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Пасы</span>
+                <span class="detail-value">0</span>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Сейвы</span>
+                <span class="detail-value">-</span>
+            </div>
+        </div>
+        <button class="back-btn" onclick="closeProfile('profile-pokskonnoy')">← Вернуться к составу</button>
     </div>
 
-    <!-- 7А -->
-    <div class="class-section" id="class-2">
-        <div class="class-label">7А</div>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr><th>Игрок</th><th>Позиция</th><th>Матчи</th><th>Голы</th><th>Пасы</th><th>Сейвы</th><th>Пропущено</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                </tbody>
-            </table>
+    <!-- Профиль Александра -->
+    <div id="profile-grankin" class="profile-section">
+        <button class="close-profile" onclick="closeProfile('profile-grankin')">&times;</button>
+        <div class="profile-header">
+            <div class="photo-frame">
+                <span class="photo-placeholder">Фото игрока (400x400)</span>
+            </div>
+            <div class="profile-info">
+                <h2>Гранкин Александр</h2>
+                <p>Позиция: <strong>Левый защитник</strong></p>
+                <p>Год рождения: <strong>2013</strong></p>
+                <p>Возраст: <strong id="age-grankin">Загрузка...</strong></p>
+                <p>Трансфер: <strong>Остались в Д классе</strong></p>
+            </div>
         </div>
+
+        <div class="details-grid">
+            <div class="detail-box">
+                <span class="detail-label">Матчи</span>
+                <span class="detail-value">0</span>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Голы</span>
+                <span class="detail-value">0</span>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Пасы</span>
+                <span class="detail-value">0</span>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Сейвы</span>
+                <span class="detail-value">-</span>
+            </div>
+        </div>
+        <button class="back-btn" onclick="closeProfile('profile-grankin')">← Вернуться к составу</button>
     </div>
 
-    <!-- 7Б -->
-    <div class="class-section" id="class-3">
-        <div class="class-label">7Б</div>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr><th>Игрок</th><th>Позиция</th><th>Матчи</th><th>Голы</th><th>Пасы</th><th>Сейвы</th><th>Пропущено</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                </tbody>
-            </table>
+    <!-- Профиль Максима -->
+    <div id="profile-klyshnikov" class="profile-section">
+        <button class="close-profile" onclick="closeProfile('profile-klyshnikov')">&times;</button>
+        <div class="profile-header">
+            <div class="photo-frame">
+                <span class="photo-placeholder">Фото игрока (400x400)</span>
+            </div>
+            <div class="profile-info">
+                <h2>Клышников Максим</h2>
+                <p>Позиция: <strong>Правый защитник</strong></p>
+                <p>Год рождения: <strong>2013</strong></p>
+                <p>Возраст: <strong id="age-klyshnikov">Загрузка...</strong></p>
+                <p>Трансфер: <strong>Остались в Д классе</strong></p>
+            </div></div>
+
+        <div class="details-grid">
+            <div class="detail-box">
+                <span class="detail-label">Матчи</span>
+                <span class="detail-value">0</span>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Голы</span>
+                <span class="detail-value">0</span>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Пасы</span>
+                <span class="detail-value">0</span>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Сейвы</span>
+                <span class="detail-value">-</span>
+            </div>
         </div>
+        <button class="back-btn" onclick="closeProfile('profile-klyshnikov')">← Вернуться к составу</button>
     </div>
 
-    <!-- 7В -->
-    <div class="class-section" id="class-4">
-        <div class="class-label">7В</div>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr><th>Игрок</th><th>Позиция</th><th>Матчи</th><th>Голы</th><th>Пасы</th><th>Сейвы</th><th>Пропущено</th></tr>
-                </thead>
-                <tbody><tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- 7Г -->
-    <div class="class-section" id="class-5">
-        <div class="class-label">7Г</div>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr><th>Игрок</th><th>Позиция</th><th>Матчи</th><th>Голы</th><th>Пасы</th><th>Сейвы</th><th>Пропущено</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- 7Е -->
-    <div class="class-section" id="class-6">
-        <div class="class-label">7Е</div>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr><th>Игрок</th><th>Позиция</th><th>Матчи</th><th>Голы</th><th>Пасы</th><th>Сейвы</th><th>Пропущено</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- 7Ж -->
-    <div class="class-section" id="class-7">
-        <div class="class-label">7Ж</div>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr><th>Игрок</th><th>Позиция</th><th>Матчи</th><th>Голы</th><th>Пасы</th><th>Сейвы</th><th>Пропущено</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- 7З -->
-    <div class="class-section" id="class-8">
-        <div class="class-label">7З</div>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr><th>Игрок</th><th>Позиция</th><th>Матчи</th><th>Голы</th><th>Пасы</th><th>Сейвы</th><th>Пропущено</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                    <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Пагинация под таблицей (классы) -->
-    <div class="pagination" id="class-pagination"></div>
-
+    <!-- Скрипт для логики и расчета возраста -->
     <script>
-        // ===== Профили игроков =====
+        // Функция открытия профиля
         function showProfile(profileId) {
-            document.querySelectorAll('.profile-section').forEach(p => p.classList.remove('active'));
+            // Скрываем все профили
+            const profiles = document.querySelectorAll('.profile-section');
+            profiles.forEach(p => p.classList.remove('active'));
+            
+            // Показываем нужный
             const target = document.getElementById(profileId);
             if (target) {
                 target.classList.add('active');
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Прокрутка к верху профиля
+                target.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
+        // Функция закрытия профиля
         function closeProfile(profileId) {
-            document.getElementById(profileId)?.classList.remove('active');
-        }
-
-        // ===== Пагинация под карточками (5 страниц — по одной на игрока) =====
-        const playerProfileIds = [
-            'profile-stogov',
-            'profile-pokskonnoy',
-            'profile-grankin',
-            'profile-klyshnikov',
-            'profile-smirnov'
-        ];
-        const playerPagination = document.getElementById('player-pagination');
-        let currentPlayerPage = 1;
-        const totalPlayerPages = playerProfileIds.length;
-
-        function renderPlayerPagination() {
-            playerPagination.innerHTML = '';
-
-            const prev = document.createElement('button');
-            prev.className = 'page-btn';
-            prev.textContent = '<';
-            prev.disabled = currentPlayerPage === 1;
-            prev.onclick = () => switchPlayerPage(currentPlayerPage - 1);
-            playerPagination.appendChild(prev);
-
-            for (let i = 1; i <= totalPlayerPages; i++) {
-                const btn = document.createElement('button');
-                btn.className = 'page-btn' + (i === currentPlayerPage ? ' active' : '');
-                btn.textContent = i;
-                btn.onclick = () => switchPlayerPage(i);
-                playerPagination.appendChild(btn);
+            const target = document.getElementById(profileId);
+            if (target) {
+                target.classList.remove('active');
             }
-
-            const next = document.createElement('button');
-            next.className = 'page-btn';
-            next.textContent = '>';
-            next.disabled = currentPlayerPage === totalPlayerPages;
-            next.onclick = () => switchPlayerPage(currentPlayerPage + 1);
-            playerPagination.appendChild(next);
         }
 
-        function switchPlayerPage(page) {
-            if (page < 1 || page > totalPlayerPages) return;
-            currentPlayerPage = page;
-            showProfile(playerProfileIds[page - 1]);
-            renderPlayerPagination();
-        }
-
-        renderPlayerPagination();
-
-        // ===== Пагинация под таблицей (8 классов) =====
-        const classSections = document.querySelectorAll('.class-section');
-        const classPagination = document.getElementById('class-pagination');
-        let currentClassPage = 1;
-        const totalClassPages = classSections.length;
-
-        function renderClassPagination() {
-            classPagination.innerHTML = '';
-
-            const prev = document.createElement('button');
-            prev.className = 'page-btn';
-            prev.textContent = '<';prev.disabled = currentClassPage === 1;
-            prev.onclick = () => switchClassPage(currentClassPage - 1);
-            classPagination.appendChild(prev);
-
-            for (let i = 1; i <= totalClassPages; i++) {
-                const btn = document.createElement('button');
-                btn.className = 'page-btn' + (i === currentClassPage ? ' active' : '');
-                btn.textContent = i;
-                btn.onclick = () => switchClassPage(i);
-                classPagination.appendChild(btn);
+        // Расчет возраста (текущий год - год рождения)
+        function calculateAge(birthYear, elementId) {
+            const currentYear = new Date().getFullYear();
+            const age = currentYear - birthYear;
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = age + ' лет';
             }
-
-            const next = document.createElement('button');
-            next.className = 'page-btn';
-            next.textContent = '>';
-            next.disabled = currentClassPage === totalClassPages;
-            next.onclick = () => switchClassPage(currentClassPage + 1);
-            classPagination.appendChild(next);
         }
 
-        function switchClassPage(page) {
-            if (page < 1 || page > totalClassPages) return;
-            currentClassPage = page;
-            classSections.forEach((s, i) => {
-                s.classList.toggle('active', i === page - 1);
-            });
-            renderClassPagination();
-        }
-
-        renderClassPagination();
+        // Запускаем расчет при загрузке страницы
+        window.onload = function() {
+            calculateAge(2013, 'age-stogov');
+            calculateAge(2013, 'age-smirnov');
+            calculateAge(2013, 'age-pokskonnoy');
+            calculateAge(2013, 'age-grankin');
+            calculateAge(2013, 'age-klyshnikov');
+        };
     </script>
 </body>
 </html>
-                   
