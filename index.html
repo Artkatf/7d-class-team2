@@ -80,18 +80,199 @@ th{background:var(--primary);color:#fff}
 </div>
 </div>
 <script>
-const playersData={'7А':[],'7Б':[],'7В':[],'7Г':[],'7Д':[{name:'Стогов Артур',pos:'Левый фланговый атакующий',num:10,dob:2013,transfer:'6В → 7Д',stats:{matches:'-',goals:'-',assists:'-'},photo:'stogov.jpg',transferPrice:'4500 €',contactPhone:'8 919 56 53 760'},{name:'Посканной Никита',pos:'Правый фланговый атакующий',num:7,dob:2013,transfer:'остался в 7Д',stats:{matches:'-',goals:'-',assists:'-'},photo:'pos.jpg',transferPrice:'5000 €'},{name:'Гранкин Александр',pos:'Левый защитник',num:4,dob:2014,transfer:'остался в 7Д',stats:{matches:'-',goals:'-',assists:'-'},transferPrice:'Бесплатно'},{name:'Клышников Максим',pos:'Правый защитник',num:2,dob:2014,transfer:'остался в 7Д',stats:{matches:'-',goals:'-',assists:'-'},transferPrice:'Бесплатно'},{name:'Смирнов Лев',pos:'Вратарь',num:1,dob:2013,transfer:'6В → 7Д',stats:{matches:'-',saves:'-',conceded:'-'},transferPrice:'1500 €'}],'7Е':[],'7Ж':[],'7З':[]};
-const leagueData=[{cls:'7А',g:'-',w:'-',d:'-',l:'-',pts:'-'},{cls:'7Б',g:'-',w:'-',d:'-',l:'-',pts:'-'},{cls:'7В',g:'-',w:'-',d:'-',l:'-',pts:'-'},{cls:'7Г',g:'-',w:'-',d:'-',l:'-',pts:'-'},{cls:'7Д',g:'-',w:'-',d:'-',l:'-',pts:'-'},{cls:'7Е',g:'-',w:'-',d:'-',l:'-',pts:'-'},{cls:'7Ж',g:'-',w:'-',d:'-',l:'-',pts:'-'},{cls:'7З',g:'-',w:'-',d:'-',l:'-',pts:'-'}];
-const PAGE_SIZE=12;let currentClass='7Д';let currentPage=1;
-function renderLeagueTable(){const tb=document.querySelector('#league-table');tb.innerHTML='';leagueData.forEach(r=>{const tr=document.createElement('tr');const a=r.cls===currentClass?' style="background:#ffe6e6"':'';tr.innerHTML='<td'+a+'>'+r.cls+'</td><td>'+r.g+'</td><td>'+r.w+'</td><td>'+r.d+'</td><td>'+r.l+'</td><td>'+r.pts+'</td>';tb.appendChild(tr)})}
-function renderPlayersGrid(){const grid=document.getElementById('players-grid');const players=playersData[currentClass]||[];const start=(currentPage-1)*PAGE_SIZE;const end=start+PAGE_SIZE;const pp=players.slice(start,end);grid.innerHTML='';if(players.length===0){grid.innerHTML='<p style="color:#777;grid-column:1/-1;text-align:center">Состав ещё не заполнен</p>';document.getElementById('pagination').innerHTML='';return}pp.forEach(p=>{const card=document.createElement('div');card.className='player-card';card.onclick=()=>openPlayerModal(p);card.innerHTML='<div class="player-name">'+p.name+'</div><div class="player-pos">'+p.pos+'</div><div><span class="player-num">'+p.num+'</span></div>';grid.appendChild(card)});renderPagination(players.length)}function renderPagination(total){const el=document.getElementById('pagination');el.innerHTML='';const tp=Math.max(1,Math.ceil(total/PAGE_SIZE));if(tp<=1)return;for(let i=1;i<=tp;i++){const btn=document.createElement('button');btn.textContent=i;btn.className=i===currentPage?'active':'';btn.onclick=()=>{currentPage=i;renderPlayersGrid()};el.appendChild(btn)}}
-function openPlayerModal(player){document.getElementById('player-modal').classList.add('show');document.getElementById('modal-name').textContent=player.name;document.getElementById('modal-pos').textContent=player.pos;document.getElementById('modal-num').textContent=player.num;document.getElementById('modal-class').textContent=currentClass;document.getElementById('modal-dob').textContent=player.dob;document.getElementById('modal-age').textContent=new Date().getFullYear()-player.dob;document.getElementById('modal-transfer').textContent=player.transfer;document.getElementById('modal-transfer-price').textContent=player.transferPrice||'—';const cb=document.getElementById('modal-contact-block');const cp=document.getElementById('modal-contact-phone');if(player.contactPhone){cb.style.display='block';cp.textContent=player.contactPhone}else{cb.style.display='none'}const mf=document.getElementById('modal-photo-frame');if(player.photo){mf.innerHTML='<img src="'+player.photo+'" alt="'+player.name+'">'}else{mf.innerHTML='Нет фото'}let st='';if((player.pos||'').toLowerCase().indexOf('вратарь')!==-1){st='Матчи: '+player.stats.matches+' | Сейвы: '+player.stats.saves+' | Пропущено: '+player.stats.conceded}else{st='Матчи: '+player.stats.matches+' | Голы: '+player.stats.goals+' | Ассисты: '+player.stats.assists}document.getElementById('modal-stat-line').textContent=st}
-function closeModal(){document.getElementById('player-modal').classList.remove('show')}
-document.getElementById('close-modal').addEventListener('click',closeModal);
-document.getElementById('player-modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
-document.querySelectorAll('.tab-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentClass=btn.getAttribute('data-class');currentPage=1;renderLeagueTable();renderPlayersGrid()})});
-renderLeagueTable();renderPlayersGrid();
+// Данные игроков
+const playersData = {
+  '7А': ,
+  '7Б': ,
+  '7В': ,
+  '7Г': ,
+  '7Д': [
+    {
+      name: 'Стогов Артур',
+      pos: 'Левый фланговый атакующий',
+      num: 10,
+      dob: 2013,
+      transfer: '6В → 7Д',
+      stats: {matches: '-', goals: '-', assists: '-'},
+      photo: null,
+      transferPrice: '4500 €',
+      contactPhone: '8 919 56 53 760' // Номер Артура
+    },
+    {
+      name: 'Посканной Никита',
+      pos: 'Правый фланговый атакующий',
+      num: 7,
+      dob: 2013,
+      transfer: 'остался в 7Д',
+      stats: {matches: '-', goals: '-', assists: '-'},
+      photo: null,
+      transferPrice: '5000 €'
+      // У Никиты нет contactPhone, значит кнопки не будет
+    },
+    {
+      name: 'Гранкин Александр',
+      pos: 'Левый защитник',
+      num: 4,
+      dob: 2014,
+      transfer: 'остался в 7Д',
+      stats: {matches: '-', goals: '-', assists: '-'},
+      photo: null,
+      transferPrice: 'Бесплатно'
+      // У Александра нет contactPhone
+    },
+    {
+      name: 'Клышников Максим',
+      pos: 'Правый защитник',
+      num: 2,
+      dob: 2014,
+      transfer: 'остался в 7Д',
+      stats: {matches: '-', goals: '-', assists: '-'},
+      photo: null,
+      transferPrice: 'Бесплатно'
+      // У Максима нет contactPhone
+    },
+    {
+      name: 'Смирнов Лев',
+      pos: 'Вратарь',
+      num: 1,
+      dob: 2013,
+      transfer: '6В → 7Д',
+      stats: {matches: '-', saves: '-', conceded: '-'},
+      photo: null,
+      transferPrice: '1500 €',
+      contactPhone: '8 912 06 22 942' // Номер Льва (твой новый номер)
+    }
+  ],
+  '7Е': ,
+  '7Ж': ,
+  '7З': 
+};
+
+const leagueData = [
+  {cls:'7А',g:'-',w:'-',d:'-',l:'-',pts:'-'},
+  {cls:'7Б',g:'-',w:'-',d:'-',l:'-',pts:'-'},
+  {cls:'7В',g:'-',w:'-',d:'-',l:'-',pts:'-'},
+  {cls:'7Г',g:'-',w:'-',d:'-',l:'-',pts:'-'},
+  {cls:'7Д',g:'-',w:'-',d:'-',l:'-',pts:'-'},
+  {cls:'7Е',g:'-',w:'-',d:'-',l:'-',pts:'-'},
+  {cls:'7Ж',g:'-',w:'-',d:'-',l:'-',pts:'-'},
+  {cls:'7З',g:'-',w:'-',d:'-',l:'-',pts:'-'}
+];
+
+const PAGE_SIZE = 12;
+let currentClass = '7Д';
+let currentPage = 1;
+
+function renderLeagueTable() {
+  const tb = document.querySelector('#league-table');
+  tb.innerHTML = '';
+  leagueData.forEach(r => {
+    const tr = document.createElement('tr');
+    const a = r.cls === currentClass ? ' style="background:#ffe6e6"' : '';
+    tr.innerHTML = '<td' + a + '>' + r.cls + '</td><td>' + r.g + '</td><td>' + r.w + '</td><td>' + r.d + '</td><td>' + r.l + '</td><td>' + r.pts + '</td>';tb.appendChild(tr);
+  });
+}
+
+function renderPlayersGrid() {
+  const grid = document.getElementById('players-grid');
+  const players = playersData[currentClass] || ;
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const end = start + PAGE_SIZE;
+  const pp = players.slice(start, end);
+  grid.innerHTML = '';
+
+  if (players.length === 0) {
+    grid.innerHTML = '<p style="color:#777;grid-column:1/-1;text-align:center">Состав ещё не заполнен</p>';
+    document.getElementById('pagination').innerHTML = '';
+    return;
+  }
+
+  pp.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'player-card';
+    card.onclick = () => openPlayerModal(p);
+    card.innerHTML = '<div class="player-name">' + p.name + '</div><div class="player-pos">' + p.pos + '</div><div><span class="player-num">' + p.num + '</span></div>';
+    grid.appendChild(card);
+  });
+  renderPagination(players.length);
+}
+
+function renderPagination(total) {
+  const el = document.getElementById('pagination');
+  el.innerHTML = '';
+  const tp = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  if (tp <= 1) return;
+  for (let i = 1; i <= tp; i++) {
+    const btn = document.createElement('button');
+    btn.textContent = i;
+    btn.className = i === currentPage ? 'active' : '';
+    btn.onclick = () => { currentPage = i; renderPlayersGrid(); };
+    el.appendChild(btn);
+  }
+}
+
+function openPlayerModal(player) {
+  document.getElementById('player-modal').classList.add('show');
+  document.getElementById('modal-name').textContent = player.name;
+  document.getElementById('modal-pos').textContent = player.pos;
+  document.getElementById('modal-num').textContent = player.num;
+  document.getElementById('modal-class').textContent = currentClass;
+  document.getElementById('modal-dob').textContent = player.dob;
+  document.getElementById('modal-age').textContent = new Date().getFullYear() - player.dob;
+  document.getElementById('modal-transfer').textContent = player.transfer;
+  document.getElementById('modal-transfer-price').textContent = player.transferPrice || '—';
+
+  // Логика показа кнопки "Связаться"
+  const cb = document.getElementById('modal-contact-block');
+  const cp = document.getElementById('modal-contact-phone');
+  if (player.contactPhone) {
+    cb.style.display = 'block';
+    cp.textContent = player.contactPhone;
+  } else {
+    cb.style.display = 'none';
+  }
+
+  const mf = document.getElementById('modal-photo-frame');
+  if (player.photo) {
+    mf.innerHTML = '<img src="' + player.photo + '" alt="' + player.name + '">';
+  } else {
+    mf.innerHTML = player.name + ' (нет фото)';
+  }
+
+  let st = '';
+  if ((player.pos || '').toLowerCase().indexOf('вратарь') !== -1) {
+    st = 'Матчи: ' + player.stats.matches + ' | Сейвы: ' + player.stats.saves + ' | Пропущено: ' + player.stats.conceded;
+  } else {
+    st = 'Матчи: ' + player.stats.matches + ' | Голы: ' + player.stats.goals + ' | Ассисты: ' + player.stats.assists;
+  }
+  document.getElementById('modal-stat-line').textContent = st;
+}
+
+function closeModal() {
+  document.getElementById('player-modal').classList.remove('show');
+}
+
+document.getElementById('close-modal').addEventListener('click', closeModal);
+document.getElementById('player-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentClass = btn.getAttribute('data-class');
+    currentPage = 1;
+    renderLeagueTable();
+    renderPlayersGrid();
+  });
+});
+
+renderLeagueTable();
+renderPlayersGrid();
 </script>
 </body>
 </html>
