@@ -170,8 +170,14 @@
       color: #777;
       font-size: 0.9rem;
       line-height: 1;
+      overflow: hidden;
     }
-    @media (max-width: 600px) {.modal-photo-frame { width: 200px; height: 200px; }
+    .modal-photo-frame img {width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    @media (max-width: 600px) {
+      .modal-photo-frame { width: 200px; height: 200px; }
       .modal { width: 95%; }
     }
     .modal h2 { margin-top: 0; }
@@ -236,8 +242,8 @@
   <div class="modal-overlay" id="player-modal">
     <div class="modal">
       <button class="close-modal" id="close-modal">&times;</button>
-      <div class="modal-photo-frame">
-        Фото 400×400 (замените на img src)
+      <div class="modal-photo-frame" id="modal-photo-frame">
+        Фото 400×400
       </div>
       <h2 id="modal-name">Имя Фамилия</h2>
       <p><strong>Позиция:</strong> <span id="modal-pos">—</span> | <strong>Класс:</strong> <span id="modal-class">—</span></p>
@@ -279,7 +285,8 @@
           num: 10,
           dob: 2013,
           transfer: '6В → 7Д',
-          stats: { matches: '-', goals: '-', assists: '-' }
+          stats: { matches: '-', goals: '-', assists: '-' },
+          photo: 'stogov.jpg'
         },
         {
           name: 'Посканной Никита',
@@ -305,12 +312,12 @@
           transfer: 'остался в 7Д',
           stats: { matches: '-', goals: '-', assists: '-' }
         },
-        {
-          name: 'Смирнов Лев',
+        {name: 'Смирнов Лев',
           pos: 'Вратарь',
           num: 1,
           dob: 2013,
-          transfer: '6В → 7Д',stats: { matches: '-', saves: '-', conceded: '-' }
+          transfer: '6В → 7Д',
+          stats: { matches: '-', saves: '-', conceded: '-' }
         }
       ],
       '7Е': [],
@@ -397,9 +404,15 @@
       document.getElementById('modal-age').textContent = new Date().getFullYear() - player.dob;
       document.getElementById('modal-transfer').textContent = player.transfer;
 
+      var modalFrame = document.getElementById('modal-photo-frame');
+      if (player.photo) {
+        modalFrame.innerHTML = '<img src="' + player.photo + '" alt="' + player.name + '">';
+      } else {
+        modalFrame.innerHTML = 'Нет фото';
+      }
+
       var statText = '';
-      if (player.pos.toLowerCase().indexOf('вратарь') !== -1) {
-        statText = 'Матчи: ' + player.stats.matches + ' | Сейвы: ' + player.stats.saves + ' | Пропущено: ' + player.stats.conceded;
+      if (player.pos.toLowerCase().indexOf('вратарь') !== -1) {statText = 'Матчи: ' + player.stats.matches + ' | Сейвы: ' + player.stats.saves + ' | Пропущено: ' + player.stats.conceded;
       } else {
         statText = 'Матчи: ' + player.stats.matches + ' | Голы: ' + player.stats.goals + ' | Ассисты: ' + player.stats.assists;
       }
@@ -408,7 +421,9 @@
 
     function closeModal() {
       document.getElementById('player-modal').classList.remove('show');
-    }document.getElementById('close-modal').addEventListener('click', closeModal);
+    }
+
+    document.getElementById('close-modal').addEventListener('click', closeModal);
     document.getElementById('player-modal').addEventListener('click', function(e) {
       if (e.target === this) closeModal();
     });
